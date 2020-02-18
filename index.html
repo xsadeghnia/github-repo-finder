@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <title>Repo Finder</title>
+</head>
+
+<body>
+    <div class="whole-page" id="myVue">
+        <div class="row">
+            <div class="header">
+                <img src="images/finding-venture-capital.jpg" alt="">
+            </div>
+        </div>
+        <div class="row">
+            <div class="title">
+                <p>Repository Finder</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="search-box">
+                <div class="input-group mb-3">
+                    <input v-model='user' type="text" class="form-control" placeholder="Github ID...">
+                    <div class="input-group-append">
+                        <button v-on:click="search" class="btn btn-success" type="submit">Search</button>
+                        <div v-if="showLoadingIcon"><img src="images/loader.gif" alt=""></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="result" v-if="data.length > 0">
+                <div class="container">
+                    <table class="owner-tbl table">
+                        <tr>
+                            <td><img v-bind:src="data[0].owner.avatar_url" alt=""></td>
+                            <td><a v-bind:href="data[0].owner.html_url">{{data[0].owner.login}}</a></td>
+                            <td>{{userInfo.name}}</td>
+                        </tr>
+                        <tr>
+                            <td v-if="userInfo.bio !=0">{{userInfo.bio}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="result" v-if="data.length > 0">
+                <div class="container">
+                    <table class="repo-tbl table table-hover">
+                        <tr>
+                            <th>Repo Name</th>
+                            <th>commits</th>
+                            <th>Stars</th>
+                            <th>Forks</th>
+                        </tr>
+                        <tr v-for="repo in allRepos">
+                            <td><a v-bind:href="repo.url">{{repo.repoName}}</a></td>
+                            <td>{{repo.commits}}</td>
+                            <td>{{repo.stars}}</td>
+                            <td>{{repo.forks}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+
+</html>
